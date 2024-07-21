@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "tsx": "^4.16.2",
+    "uuid": "^10.0.0"
+  },
+  "scripts": {
+    "dev": "tsx --watch src/index.ts"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/typescript": "^2.0.0",
+    "@types/uuid": "^10.0.0",
+    "typescript": "^5.5.3"
+  },
+  "name": "movieapp-api",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
