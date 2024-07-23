@@ -1,11 +1,29 @@
 import {Response, Request} from 'express'
-import { createUser } from '../models/usersModel';
+import { createUser, deleteUser, updateUser } from '../models/usersModel';
 import { UserProps } from '../interfaces/users';
 
+// POST /auth/register
 function register(req: Request, res: Response) {
     const {name, email, password, role} = req.body as UserProps
     const newUserCreated = createUser(name, email, password, role)
     res.json(newUserCreated)
 }
 
-export {register}
+// PATCH /auth/edit
+function editUserAccount(req: Request, res: Response) {
+    const {email, name, role} = req.body as UserProps
+    const id = req.user?.id
+    const user = updateUser(id, name, email, role)
+    res.json(user)
+}
+
+// DELETE /auth/delete
+function deleteUserAccount(req: Request, res: Response) {
+    const id = req.user?.id
+    const user = deleteUser(id)
+    req.destroy()
+    res.json(user)
+}
+
+
+export {register, deleteUserAccount, editUserAccount}
