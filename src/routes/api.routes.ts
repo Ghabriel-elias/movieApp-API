@@ -1,6 +1,13 @@
 import express from 'express'
-import { getShows } from '../controllers/showsController'
+import { filterShows, getShows } from '../controllers/showsController'
+import { getUsers } from '../models/usersModel'
 
-export const api = express()
+export const apiRouter = express()
 
-api.get('/shows', getShows)
+// apenas para teste
+apiRouter.get('/', (req, res) => {
+    res.json(getUsers())
+})
+apiRouter.get('/shows', getShows)
+// torna o parâmetro opcional "?"
+apiRouter.get('/shows/search=:search?', filterShows)
