@@ -1,7 +1,6 @@
 import express from 'express'
 import { deleteUserAccount, editUserAccount, register } from '../controllers/authController'
-import { authMiddleware, generateToken, verifyFieldsLogin, verifyFieldsRegister } from '../middlewares/authMiddlewares'
-import { validateFieldsUser } from '../middlewares/userAccountMiddleware'
+import { authMiddleware, generateToken, validateFieldsUser, verifyFieldsLogin, verifyFieldsRegister } from '../middlewares/authMiddlewares'
 
 export const authRouter = express.Router()
 

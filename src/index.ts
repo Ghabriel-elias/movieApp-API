@@ -33,3 +33,11 @@ app.listen(PORT, () => {
 
 // mudar o objeto de filmes pra ter um array de ratings/aviações de objetos, onde o objeto vai ter a estrela e o comentário de um usuário
 // e cada estrela adicionada no array, vou recalcular a média de estrelas e sempre retornar essa média
+
+// ja ta funcionando
+
+// editando usuário, deletando, criando, logando
+// pegar todos os shows, buscar pelo nome do show
+// tenho que trabalhar no favoritar filmes
+// tenho que trabalhar na avaliação dos filmes
+// por fim posso trabalhar na criação/edição/remoção dos filmes
