@@ -50,7 +50,7 @@ function updateUser(id: string, name?: string, email?: string, role?: string) {
     }
 
     users[userIndex] = user
-    return user
+    return {...user, password: undefined}
 }
 
 function deleteUser(id: string) {
