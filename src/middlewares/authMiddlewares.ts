@@ -25,6 +25,14 @@ function verifyFieldsLogin(req: Request, res: Response, next: () => void) {
     next()
 }
 
+function validateFieldsUser(req: Request, res: Response, next: () => void) {
+    const {email, name, role} = req.body as UserProps
+    if((!email || typeof email != 'string') || (!name || typeof name != 'string') || !role || typeof role != 'string') throw new HttpError(400, 'Invalid fields')
+    const user = getUserByEmail(email)
+    if(!user) throw new HttpError(400, 'User does not exist')    
+    next()
+}
+
 function authMiddleware(req: Request, res: Response, next: () => void) {
     const authHeader = req.headers.authorization
     if(!authHeader) throw new HttpError(401, 'User not authorized')
@@ -59,4 +67,4 @@ function generateToken(req: Request, res: Response, next: () => void) {
     res.json({token})
 }
 
-export {verifyFieldsRegister, verifyFieldsLogin, authMiddleware, generateToken}
+export {verifyFieldsRegister, verifyFieldsLogin, authMiddleware, generateToken, validateFieldsUser}
