@@ -21,8 +21,9 @@ function editUserAccount(req: Request, res: Response) {
 function deleteUserAccount(req: Request, res: Response) {
     const id = req.user?.id
     const user = deleteUser(id)
-    req.destroy()
+    req.user = undefined
     res.json(user)
+    req.destroy()
 }
 
 
