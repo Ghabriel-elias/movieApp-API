@@ -21,7 +21,12 @@ function verifyFieldsLogin(req: Request, res: Response, next: () => void) {
     if(!user || !user.password) throw new HttpError(400, 'User does not exist')
     const checkPassword = bcrypt.compareSync(password, user.password) 
     if(!checkPassword) throw new HttpError(400, 'Invalid password')
-    
+    const userAccount = {
+      id: user.id,
+      email: user.email,
+      name: user.name
+    }
+    req.user = userAccount
     next()
 }
 
@@ -58,11 +63,11 @@ function authMiddleware(req: Request, res: Response, next: () => void) {
 }
 
 function generateToken(req: Request, res: Response, next: () => void) {
-    const {name, email, role} = req.body as UserProps
+    const {email, id, name} = req.user || {}
     const tokenApi = process.env.JWT_KEY
     if(!tokenApi) throw new HttpError(401, 'Invalid token')
 
-    const token = jwt.sign({name, email, role}, tokenApi, {expiresIn: '1d'})
+    const token = jwt.sign({name, email, id}, tokenApi, {expiresIn: '1d'})
 
     res.json({token})
 }
