@@ -13,8 +13,12 @@ function getAllShows() {
     return shows
 }
 
+function normalizeString(str: string) {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
 function searchShow(name: string) {
-    return shows.filter(show => show.name === name)
+    return shows.filter(show => normalizeString(show.name).includes(normalizeString(name)))
 }
 
 export {getAllShows, searchShow}
