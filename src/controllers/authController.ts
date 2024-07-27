@@ -4,9 +4,9 @@ import { UserProps } from '../interfaces/users';
 
 // POST /auth/register
 function register(req: Request, res: Response) {
-    const {name, email, password, role} = req.body as UserProps
-    const newUserCreated = createUser(name, email, password, role)
-    res.json(newUserCreated)
+    const {name, email, password} = req.body as UserProps
+    const newUserCreated = createUser(name, email, password, 'standard')
+    res.json({newUserCreated})
 }
 
 // PATCH /auth/edit

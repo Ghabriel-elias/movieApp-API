@@ -6,10 +6,10 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
 function verifyFieldsRegister(req: Request, res: Response, next: () => void) {
-    const {name, email, password, role} = req.body as UserProps
+    const {name, email, password} = req.body as UserProps
     const userAlreadyExist = getUserByEmail(email)
     if(userAlreadyExist) throw new HttpError(400, 'User Already Exist')
-    if((!name || typeof name != 'string') || (!email || typeof email != 'string') || (!password || typeof password != 'string') || (!role || typeof role != 'string')) throw new HttpError(400, 'Invalid fields')
+    if((!name || typeof name != 'string') || (!email || typeof email != 'string') || (!password || typeof password != 'string')) throw new HttpError(400, 'Invalid fields')
     
     next()
 }
@@ -69,7 +69,7 @@ function generateToken(req: Request, res: Response, next: () => void) {
 
     const token = jwt.sign({name, email, id}, tokenApi, {expiresIn: '1d'})
 
-    res.json({token})
+    res.json({token, user: req.user})
 }
 
 export {verifyFieldsRegister, verifyFieldsLogin, authMiddleware, generateToken, validateFieldsUser}
