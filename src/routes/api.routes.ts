@@ -1,13 +1,12 @@
 import express from 'express'
-import { filterShows, getShows } from '../controllers/apiController'
-import { getUsers } from '../models/usersModel'
+import { filterShows, getGenres, getMovies, getSeries } from '../controllers/apiController'
 
 export const apiRouter = express.Router()
 
-// apiRouter.get('/', (req, res) => {
-//     console.log('asd')
-//     res.json(getUsers())
-// })
-apiRouter.get('/shows', getShows)
-// torna o parâmetro opcional "?"
+apiRouter.get('/genres', getGenres)
+
+apiRouter.get('/movies/:genre?', getMovies)
+
+apiRouter.get('/series/:genre?', getSeries)
+
 apiRouter.get('/shows/search=:search?', filterShows)
