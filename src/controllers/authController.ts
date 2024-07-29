@@ -6,7 +6,7 @@ import { UserProps } from '../interfaces/users';
 function register(req: Request, res: Response) {
     const {name, email, password} = req.body as UserProps
     const newUserCreated = createUser(name, email, password, 'standard')
-    res.json({newUserCreated})
+    res.json(newUserCreated)
 }
 
 // PATCH /auth/edit

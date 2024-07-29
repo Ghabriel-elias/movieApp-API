@@ -2,7 +2,7 @@ import { HttpError } from "../erros/HttpError";
 import { getAllGenres } from "../models/genreModel";
 import { getAllMovies, getMoviesByGenre, searchMovie } from "../models/moviesModel";
 import { Request, Response } from 'express';
-import { getAllSeries, getSeriesByGenre, searchSeries } from "../models/seriesModel";
+import { addRating, getAllSeries, getSeriesByGenre, searchSeries } from "../models/seriesModel";
 
 // GET /api/genres
 function getGenres(req: Request, res: Response) {
@@ -20,7 +20,7 @@ function getMovies(req: Request, res: Response) {
     }
 }
 
-// GET /api/movies/:genre?
+// GET /api/series/:genre?
 function getSeries(req: Request, res: Response) {
     const {genre} = req.params as {genre?: string}
     if(genre && genre != 'all') {
@@ -28,6 +28,21 @@ function getSeries(req: Request, res: Response) {
     } else {
         res.json(getAllSeries())
     }
+}
+
+
+interface BodyRatingProps {
+    serieId: string;
+    ratingNote: number;
+    comment: string;
+}
+
+// POST /api/series/rating
+function addRatingSeries(req: Request, res: Response) {
+    const {serieId, ratingNote, comment} = req.body as BodyRatingProps
+    const userId = req.user?.id
+    const serie = addRating(serieId, ratingNote, comment, userId)
+    res.json(serie)
 }
 
 // GET /api/shows/search=:search?
@@ -43,5 +58,5 @@ function filterShows(req: Request, res: Response) {
     res.json(response)
 }
 
-export {getMovies, filterShows, getGenres, getSeries}
+export {getMovies, filterShows, getGenres, getSeries, addRatingSeries}
 
