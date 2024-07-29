@@ -22,11 +22,11 @@ function getSerieIndexById(id: string) {
     return series.findIndex(serie => serie.id === id)
 }
 
-function addRatingSeries(serieId: string, ratingNote: number, comment: string, userId: string) {
+function addRatingSeries(serieId: string, ratingNote: number, userId: string, comment?: string) {
 
     const serieIndex = getSerieIndexById(serieId)
     const newRating = {
-        comment: comment,
+        comment: comment || '',
         ratingNote: ratingNote,
         userId: userId
     }

@@ -7,15 +7,13 @@ import bcrypt from 'bcrypt'
 interface BodyRatingProps {
   showId: string;
   ratingNote: number;
-  comment: string;
 }
 
 export const validateFieldsRatting = (req: Request, res: Response, next: () => void) => {
-  const {showId, ratingNote, comment} = req.body as BodyRatingProps
+  const {showId, ratingNote} = req.body as BodyRatingProps
   if(
     (!showId || typeof showId != 'string') || 
-    (!ratingNote || typeof ratingNote != 'number') || 
-    (!comment || typeof comment != 'string')
+    (!ratingNote || typeof ratingNote != 'number') 
   ) throw new HttpError(400, 'Invalid Fields')
   
   next()

@@ -22,11 +22,11 @@ function getMovieIndexById(id: string) {
     return movies.findIndex(movie => movie.id === id)
 }
 
-function addRatingMovies(movieId: string, ratingNote: number, comment: string, userId: string) {
+function addRatingMovies(movieId: string, ratingNote: number, userId: string, comment?: string) {
 
     const serieIndex = getMovieIndexById(movieId)
     const newRating = {
-        comment: comment,
+        comment: comment || '',
         ratingNote: ratingNote,
         userId: userId
     }

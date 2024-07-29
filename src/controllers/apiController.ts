@@ -34,14 +34,14 @@ function getSeries(req: Request, res: Response) {
 interface BodyRatingProps {
     showId: string;
     ratingNote: number;
-    comment: string;
+    comment?: string;
 }
 
 // POST /api/series/rating
 function postRattingSeries(req: Request, res: Response) {
     const {showId, ratingNote, comment} = req.body as BodyRatingProps
     const userId = req.user?.id
-    const serie = addRatingSeries(showId, ratingNote, comment, userId)
+    const serie = addRatingSeries(showId, ratingNote, userId, comment)
     res.json(serie)
 }
 
@@ -49,7 +49,7 @@ function postRattingSeries(req: Request, res: Response) {
 function postRattingMovies(req: Request, res: Response) {
     const {showId, ratingNote, comment} = req.body as BodyRatingProps
     const userId = req.user?.id
-    const serie = addRatingMovies(showId, ratingNote, comment, userId)
+    const serie = addRatingMovies(showId, ratingNote, userId, comment)
     res.json(serie)
 }
 
