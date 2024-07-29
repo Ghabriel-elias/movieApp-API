@@ -1,42 +1,7 @@
 import {Response, Request} from 'express'
 import { getUserByEmail } from '../models/usersModel'
 import { HttpError } from '../erros/HttpError'
-import { UserProps } from '../interfaces/users'
-import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-
-function verifyFieldsRegister(req: Request, res: Response, next: () => void) {
-    const {name, email, password} = req.body as UserProps
-    const userAlreadyExist = getUserByEmail(email)
-    if(userAlreadyExist) throw new HttpError(400, 'User Already Exist')
-    if((!name || typeof name != 'string') || (!email || typeof email != 'string') || (!password || typeof password != 'string')) throw new HttpError(400, 'Invalid fields')
-    
-    next()
-}
-
-function verifyFieldsLogin(req: Request, res: Response, next: () => void) {
-    const {email, password} = req.body as UserProps
-    if(!password || typeof password != 'string') throw new HttpError(400, 'Invalid fields')
-    const user = getUserByEmail(email)
-    if(!user || !user.password) throw new HttpError(400, 'User does not exist')
-    const checkPassword = bcrypt.compareSync(password, user.password) 
-    if(!checkPassword) throw new HttpError(400, 'Invalid password')
-    const userAccount = {
-      id: user.id,
-      email: user.email,
-      name: user.name
-    }
-    req.user = userAccount
-    next()
-}
-
-function validateFieldsUser(req: Request, res: Response, next: () => void) {
-    const {email, name, role} = req.body as UserProps
-    if((!email || typeof email != 'string') || (!name || typeof name != 'string') || !role || typeof role != 'string') throw new HttpError(400, 'Invalid fields')
-    const user = getUserByEmail(email)
-    if(!user) throw new HttpError(400, 'User does not exist')    
-    next()
-}
 
 function authMiddleware(req: Request, res: Response, next: () => void) {
     const authHeader = req.headers.authorization
@@ -72,4 +37,4 @@ function generateToken(req: Request, res: Response, next: () => void) {
     res.json({token, user: req.user})
 }
 
-export {verifyFieldsRegister, verifyFieldsLogin, authMiddleware, generateToken, validateFieldsUser}
+export {authMiddleware, generateToken}
