@@ -1,5 +1,5 @@
 import express from 'express'
-import { addRatingSeries, filterShows, getGenres, getMovies, getSeries } from '../controllers/apiController'
+import { postRattingSeries, filterShows, getGenres, getMovies, getSeries, postRattingMovies } from '../controllers/apiController'
 import { authMiddleware } from '../middlewares/authMiddlewares'
 import { validateFieldsRatting } from '../middlewares/validateFieldsMiddleware'
 
@@ -11,6 +11,8 @@ apiRouter.get('/movies/:genre?', getMovies)
 
 apiRouter.get('/series/:genre?', getSeries)
 
-apiRouter.post('/series/rating', authMiddleware, validateFieldsRatting, addRatingSeries)
+apiRouter.post('/series/rating', authMiddleware, validateFieldsRatting, postRattingSeries)
+
+apiRouter.post('/movies/rating', authMiddleware, validateFieldsRatting, postRattingMovies)
 
 apiRouter.get('/shows/search=:search?', filterShows)

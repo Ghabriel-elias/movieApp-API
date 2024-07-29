@@ -22,7 +22,7 @@ function getSerieIndexById(id: string) {
     return series.findIndex(serie => serie.id === id)
 }
 
-function addRating(serieId: string, ratingNote: number, comment: string, userId: string) {
+function addRatingSeries(serieId: string, ratingNote: number, comment: string, userId: string) {
 
     const serieIndex = getSerieIndexById(serieId)
     const newRating = {
@@ -46,5 +46,5 @@ function searchSeries(name: string) {
     return series.filter(movie => normalizeString(movie.name).includes(normalizeString(name)))
 }
 
-export {getAllSeries, searchSeries, getSeriesByGenre, addRating}
+export {getAllSeries, searchSeries, getSeriesByGenre, addRatingSeries}
 

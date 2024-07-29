@@ -1,8 +1,8 @@
 import { HttpError } from "../erros/HttpError";
 import { getAllGenres } from "../models/genreModel";
-import { getAllMovies, getMoviesByGenre, searchMovie } from "../models/moviesModel";
+import { addRatingMovies, getAllMovies, getMoviesByGenre, searchMovie } from "../models/moviesModel";
 import { Request, Response } from 'express';
-import { addRating, getAllSeries, getSeriesByGenre, searchSeries } from "../models/seriesModel";
+import { addRatingSeries, getAllSeries, getSeriesByGenre, searchSeries } from "../models/seriesModel";
 
 // GET /api/genres
 function getGenres(req: Request, res: Response) {
@@ -32,16 +32,24 @@ function getSeries(req: Request, res: Response) {
 
 
 interface BodyRatingProps {
-    serieId: string;
+    showId: string;
     ratingNote: number;
     comment: string;
 }
 
 // POST /api/series/rating
-function addRatingSeries(req: Request, res: Response) {
-    const {serieId, ratingNote, comment} = req.body as BodyRatingProps
+function postRattingSeries(req: Request, res: Response) {
+    const {showId, ratingNote, comment} = req.body as BodyRatingProps
     const userId = req.user?.id
-    const serie = addRating(serieId, ratingNote, comment, userId)
+    const serie = addRatingSeries(showId, ratingNote, comment, userId)
+    res.json(serie)
+}
+
+// POST /api/movies/rating
+function postRattingMovies(req: Request, res: Response) {
+    const {showId, ratingNote, comment} = req.body as BodyRatingProps
+    const userId = req.user?.id
+    const serie = addRatingMovies(showId, ratingNote, comment, userId)
     res.json(serie)
 }
 
@@ -58,5 +66,5 @@ function filterShows(req: Request, res: Response) {
     res.json(response)
 }
 
-export {getMovies, filterShows, getGenres, getSeries, addRatingSeries}
+export {getMovies, filterShows, getGenres, getSeries, postRattingSeries, postRattingMovies}
 
