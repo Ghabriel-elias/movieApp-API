@@ -1,7 +1,8 @@
 import {Response, Request} from 'express'
-import { getUserByEmail } from '../models/usersModel'
+import { getUserByEmail, updateUser } from '../models/usersModel'
 import { HttpError } from '../erros/HttpError'
 import jwt from 'jsonwebtoken'
+import { UserProps } from '../interfaces/users'
 
 function authMiddleware(req: Request, res: Response, next: () => void) {
     const authHeader = req.headers.authorization
@@ -27,6 +28,19 @@ function authMiddleware(req: Request, res: Response, next: () => void) {
     }
 }
 
+function editUserMiddleware(req: Request, res: Response, next: () => void) {
+    const {email, name} = req.body as UserProps
+    const id = req.user?.id
+    const user = updateUser(id, name, email, 'standard')
+    const userUpdate = {
+        id: user.id,
+        name: user.name,
+        email: user.email
+    }
+    req.user = userUpdate
+    next()
+}
+
 function generateToken(req: Request, res: Response, next: () => void) {
     const {email, id, name} = req.user || {}
     const tokenApi = process.env.JWT_KEY
@@ -37,4 +51,4 @@ function generateToken(req: Request, res: Response, next: () => void) {
     res.json({token, user: req.user})
 }
 
-export {authMiddleware, generateToken}
+export {authMiddleware, generateToken, editUserMiddleware}
