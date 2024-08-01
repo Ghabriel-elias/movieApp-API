@@ -46,9 +46,7 @@ export function verifyFieldsLogin(req: Request, res: Response, next: () => void)
 }
 
 export function validateFieldsUser(req: Request, res: Response, next: () => void) {
-  const {email, name, role} = req.body as UserProps
-  if((!email || typeof email != 'string') || (!name || typeof name != 'string') || !role || typeof role != 'string') throw new HttpError(400, 'Invalid fields')
-  const user = getUserByEmail(email)
-  if(!user) throw new HttpError(400, 'User does not exist')    
+  const {email, name} = req.body as UserProps
+  if((!email || typeof email != 'string') || (!name || typeof name != 'string')) throw new HttpError(400, 'Invalid fields')
   next()
 }
